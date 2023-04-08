@@ -1,6 +1,6 @@
 export const questions = [
     {
-        qn: "How long can it take me to get an express passport?",
+        qn: "How long can for an express passport?",
         link:"https://twitter.com/DCICUg/status/1642752215478591488?cxt=HHwWgICzmfabncwtAAAA"
     },
     {
