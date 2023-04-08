@@ -10,7 +10,7 @@ function Chatbox({ handleClose, open }) {
   const [startBtn, setStartBtn] = useState(false);
   const [botImg, setBotImg] = useState(true);
   const [inputValue, setInputValue] = useState("");
-
+  
   useEffect(() => {
     if (faq && ques < questions.length) {
       setTimeout(() => {
@@ -47,7 +47,7 @@ function Chatbox({ handleClose, open }) {
   const handleSubmit = () => {
     if (inputValue) {
       // send the input value to the Flask API
-      axios.post('http://localhost:5000/similar_qns', {
+      axios.post(process.env.REACT_APP_API_URL+'/similar_qns', {
         input_qn: inputValue
       })
       .then(response => {
