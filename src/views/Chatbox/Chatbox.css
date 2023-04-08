@@ -7,8 +7,8 @@
 
 .chatbox-wrapper {
     position: relative;
-    min-width: 380px;
-    max-width: 400px;
+    min-width: 350px;
+    max-width: 370px;
     height: 560px;
     background-color: #FFFFFF;
     border-radius: 18px;
@@ -33,7 +33,7 @@
 }
 
 .faq-wrapper {
-    width: 345px;
+    width: 315px;
     height: 350px;
     background-color: #FFFFFF;
     position: absolute;
@@ -277,13 +277,13 @@
 
 @media screen and (max-width: 350px) {
     #chatbox {
-        width: 375px;
+        width: 345px;
     }
 }
 
 @media screen and (max-width: 300px) {
     #chatbox {
-        width: 345px;
+        width: 315px;
     }
 }
 .form-control {
