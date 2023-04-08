@@ -1,14 +1,10 @@
 export const questions = [
     {
-        title: "Can I redeem my FD before the original term?"
+        qn: "How long can it take me to get an express passport?",
+        link:"https://twitter.com/DCICUg/status/1642752215478591488?cxt=HHwWgICzmfabncwtAAAA"
     },
     {
-        title: "How do I pay my Credit card bill?"
+        qn: "What are the requirements for  a passport",
+        link:"https://twitter.com/DCICUg/status/1642751009142325249?cxt=HHwWgoC-pdrVnMwtAAAA"
     },
-    {
-        title: "How can I get my Account Statement?"
-    },
-    {
-        title: "What is the tenure of Fixed Deposit?"
-    }
 ]

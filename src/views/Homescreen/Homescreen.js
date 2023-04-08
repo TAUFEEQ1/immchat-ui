@@ -10,7 +10,7 @@ function Homescreen() {
     }
 
     const openLink = () => {
-        window.open('https://github.com/neeleshio/chatbot-ui', '_blank');
+        window.open('https://github.com/TAUFEEQ1/chatbot-ui', '_blank');
     }
 
     const downloadFolder = () => {
@@ -21,7 +21,7 @@ function Homescreen() {
         <div id="homescreen">
             <div className="project-info">
                 <h1 className="welcome">WELCOME</h1>
-                <h3>This project has been deployed on Vercel</h3>
+                <h3>This is a demo bot for Immigrations FAQs</h3>
                 <div className="buttons">
                     <button className="view" onClick={openLink}>View on Github</button>
                     <button className="download" onClick={downloadFolder}>Download folder</button>
@@ -40,7 +40,7 @@ function Homescreen() {
                 </button>
             </div>
 
-            <h2 className="footer-text">CHATBOT UI <img src="./chat.png" width="15px" height="15px" alt="chat-png" /></h2>
+            <h2 className="footer-text">FAQs BOT UI <img src="./chat.png" width="15px" height="15px" alt="chat-png" /></h2>
 
         </div >
     )
