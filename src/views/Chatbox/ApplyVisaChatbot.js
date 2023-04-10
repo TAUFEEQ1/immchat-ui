@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./Chatbox.css";
-import { questions } from "./questions";
-import axios from "axios"
+import bot from "./bot";
 
-function Chatbox({ handleClose, open, toggleChatbot }) {
-  const [list, setList] = useState([]);
-  const [ques, setQues] = useState(0);
+function Chatbox({ handleClose, open }) {
+  const [list, setList] = useState([{isbot:true,text:"Please enter your application type (visa or permit):"}]);
   const [faq, setFaq] = useState(false);
   const [startBtn, setStartBtn] = useState(false);
   const [botImg, setBotImg] = useState(true);
   const [inputValue, setInputValue] = useState("");
   
-  useEffect(() => {
-    if (faq && ques < questions.length) {
-      setTimeout(() => {
-        setQues((prev) => prev + 1);
-        setList([...list, questions[ques]]);
-      }, 1500);
-    } else if (ques === questions.length) {
-      setStartBtn(true);
-    }
-  }, [list, faq, ques]);
-
+  bot.setExit(handleClose);
+  bot.setHost(process.env.REACT_APP_API_URL);
   useEffect(() => {
     setTimeout(() => {
       setFaq(true);
-    }, 2000);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -47,30 +36,27 @@ function Chatbox({ handleClose, open, toggleChatbot }) {
   const handleSubmit = () => {
     if (inputValue) {
       // send the input value to the Flask API
-      axios.post(process.env.REACT_APP_API_URL+'/similar_qns', {
-        input_qn: inputValue
-      })
-      .then(response => {
-        // handle the response from the Flask API
-        const newlist = [...list,...response.data]; 
+      const resp = bot.run(inputValue);
+      if(typeof resp === 'string'){
+        const newlist = [...list,{isbot:true,text:resp}]; 
         setList(newlist.slice(-3));
         setInputValue("");
-
-      })
-      .catch(error => {
-        // handle any errors
-        console.error(error);
-      });
-  
+      }else{
+        const newlist = [...list,{isbot:true,text:"Please wait..."}];
+        setList(newlist.slice(-3));
+        setInputValue("");
+        resp.then((res)=>{
+          newlist.push({isbot:true,text:"click to view application",link:res.data["link"]});
+          setList(newlist.slice(-3));
+          bot.reset();
+        });
+      }
     }
   };;
-  const handleLinkClink = (link)=>{
-    switch(link){
-      case "https://www.immigration.go.ug/node/198":
-        toggleChatbot("applyVisa");
-        break;
-      default:
-        window.open(link,"_blank");
+
+  const handleLinkClick = (lnk)=>{
+    if(lnk){
+      window.open(lnk,"_blank");
     }
   }
 
@@ -78,12 +64,11 @@ function Chatbox({ handleClose, open, toggleChatbot }) {
     <div id="chatbox">
       <div className="chatbox-wrapper">
         <div className="chatbox-top">
-          <h1>FAQ Bot</h1>
+          <h1>Visa Bot</h1>
           <h2>Hello 👋</h2>
           <div className="chatbox-intro">
             <p>
-              Ask me any question you have and I'll try to find an answer for
-              you from our FAQ.
+              I will guide you through visa application process.
             </p>
           </div>
         </div>
@@ -99,10 +84,10 @@ function Chatbox({ handleClose, open, toggleChatbot }) {
             {faq && (
               <ul>
                 {list.length > 0 &&
-                  list.map((question, key) => (
-                    <li key={key} onClick={()=>handleLinkClink(question.link)} className="chat-qn">
-                      <span>⦿</span>
-                      {question.qn}
+                  list.map((message, key) => (
+                    <li key={key} className="chat-qn" onClick={()=>handleLinkClick(message.link)}>
+                      {message.isbot ? <span>⦿</span> : null}
+                      {message.text}
                     </li>
                   ))}
               </ul>

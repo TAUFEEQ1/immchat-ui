@@ -1,12 +1,23 @@
 import React from 'react'
 import './Homescreen.css'
-import Chatbox from '../Chatbox/Chatbox'
+import Chatbox from '../Chatbox/Chatbox';
+import ApplyVisaChatbot from "../Chatbox/ApplyVisaChatbot";
 
 function Homescreen() {
-    const [open, setOpen] = React.useState(false)
+    const [bots, setBots] = React.useState({ applyVisa: false, base: true, current: "base" });
+
+    const handleClose = (bot_name) => {
+        setBots({ ...bots, [bot_name]: false });
+    }
 
     const handleOpen = () => {
-        setOpen(!open)
+        setBots({ ...bots, base: true, current: "base" });
+    }
+
+    const toggleChatbot = (bot_name) => {
+        const current = bots.current;
+        handleClose(current);
+        setBots({ ...bots, [bot_name]: true, current: bot_name });
     }
 
     const openLink = () => {
@@ -29,7 +40,8 @@ function Homescreen() {
             </div>
 
             <div className="chat-box">
-                {open && <Chatbox handleClose={handleOpen} open={open} />}
+                {bots.base && <Chatbox handleClose={() => handleClose("base")} open={bots.base} toggleChatbot={toggleChatbot} />}
+                {bots.applyVisa && <ApplyVisaChatbot handleClose={() => handleClose("applyVisa")} open={bots.applyVisa} />}
             </div>
             <div className="chat-button">
                 <div className="tooltip">
